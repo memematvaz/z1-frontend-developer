@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.header{
+    margin: 10px 0px;
+    padding: 18px 20px;
+    border-bottom: 1px solid lightgrey;  
+}
+  
+.title{
+    color: $main-color;
+    font-family: $text-font;
+    font-size: 21px;
+    font-style: italic;
+}
