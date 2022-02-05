@@ -1,12 +1,8 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './styles/App.scss';
 
-// import ScanPage from './pages/ScanPage'
-// import CapturePage from './pages/CapturePage'
-import Header from './components/Header';
-import Button from './components/Button';
-
-import Id from './assets/images/id.svg'
+import ScanPage from './pages/ScanPage'
+import CapturePage from './pages/CapturePage'
 
 import checkPhoto from './services/checkPhoto'
 
@@ -33,7 +29,6 @@ function App() {
   
   const changeScan = () => {
     setPage('scan')
-    
   }
 
   const takePhoto = () => {
@@ -62,6 +57,7 @@ function App() {
       })
   }
 
+  console.log('isPhotoValid', isPhotoValid)
   const getVideo = () => {
       navigator.mediaDevices
           .getUserMedia({ 
@@ -78,40 +74,16 @@ function App() {
   }
 
 
+
   return (
     <div className="wrapper">
-      {/* <ScanPage/>
-      <CapturePage/> */}
-      {page === 'scan' ?
-        <div className="scan-page">
-          <Header/>
-          <h4>Scan your ID</h4>
-          <p>Take a picture. It may take time to validate your personal information.</p>
-          <img className="image" src={Id} />
-
-          {hasPhoto ? 
-           <img className="image" src={photo} />
-          : ''}
-         
-          <button className="button" onClick={changeCamera}>
-            {hasPhoto ? 'Retake picture' : 'Take picture'}
-          </button>
-         
-        </div>
-
-        :
-    
-      <div className="capture-page">
-          <div>
-            <video className={hasPhoto ? 'none' : 'image'} ref={videoRef}></video>
-            <canvas className={'image' + isPhotoValid ? 'image--valid' : 'image--invalid'} ref={ photoRef }></canvas>
-            
-            <button className="button" onClick={changeScan}>
-              Cancel
-            </button>
-          </div>
-      </div>
       
+      
+      {page === 'scan' ?
+        <ScanPage hasPhoto= {hasPhoto} photo={photo} isPhotoValid={isPhotoValid} changeCamera={changeCamera}/>
+        :
+        <CapturePage hasPhoto= {hasPhoto} isPhotoValid={isPhotoValid} changeScan={changeScan} videoRef={videoRef} photoRef={photoRef}/>
+     
       }
     
     </div>
