@@ -17,7 +17,7 @@ const ScanPage: React.FC<{ photo: string, isPhotoValid: boolean, changeCamera: a
             <div className={'image-container ' + (photo !== '' ? '' : 'image-container--padding')}>
                 {photo !== '' ? 
                     <>
-                        <img className={'image ' + (isPhotoValid ? 'image--valid' : 'image--invalid')} src={photo} alt="picture taken" />
+                        <img className={'image ' + (isPhotoValid ? 'image--valid' : 'image--invalid')} src={photo} alt="id taken" />
                         <div className={'feedback ' + (isPhotoValid ? 'feedback--valid' : 'feedback--invalid')}>
                             <img src={isPhotoValid ? v : x} alt="icon"/>
                             <p>{isPhotoValid ? 'Accepted' : 'Rejected'}</p>
