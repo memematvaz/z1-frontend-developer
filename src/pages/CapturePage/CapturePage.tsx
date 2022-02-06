@@ -30,10 +30,19 @@ const CapturePage: React.FC<{ isPhotoValid: boolean, changeScan: any, videoRef: 
                     </canvas>
                 </div>
                 <div className="loading">
-                    <img src= {(isValidated ? '' : bomb)+(isPhotoValid ? vGreen : '')} alt="icon" />
-                    <p className="text text--inverted">
-                        {(isValidated ? '' : 'Room lighting is too low') + (isPhotoValid ? 'Picture taken' : '')}
-                    </p>
+                    {isValidated ? '' :
+                        <>
+                            <img src= { bomb } alt="icon bomb" />
+                            <p className="text text--inverted">Room lighting is too low</p>
+                        </>  
+                    }
+                    {isValidated && isPhotoValid ? 
+                        <>
+                            <img src= { vGreen } alt="icon ok" />
+                            <p className="text text--inverted">Picture taken</p>
+                        </>
+                        
+                    : ''}
                 </div>
                 <button className="button-cancel" onClick={changeScan}>
                         Cancel
