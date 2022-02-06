@@ -5,43 +5,35 @@ import Id from '../../assets/images/id.svg'
 import x from '../../assets/images/x.svg'
 import v from '../../assets/images/v.svg'
 
-const ScanPage: React.FC<{ hasPhoto: boolean, photo: string, isPhotoValid: boolean, changeCamera: any }> = props => {
-
-    const { hasPhoto, photo, isPhotoValid, changeCamera} = props;
+const ScanPage: React.FC<{ photo: string, isPhotoValid: boolean, changeCamera: any }> = props => {
+    
+    const { photo, isPhotoValid, changeCamera} = props;
 
     return(
         <div className="scan-page">
             <Header/>
             <h4 className="title">Scan your ID</h4>
             <p className="text">Take a picture. It may take time to validate your personal information.</p>
-            <div className={'image-container ' + (hasPhoto ? '' : 'image-container--padding')}>
-                {hasPhoto ? 
+            <div className={'image-container ' + (photo !== '' ? '' : 'image-container--padding')}>
+                {photo !== '' ? 
                     <>
-                        <img className={'image ' + (isPhotoValid ? 'image--valid' : 'image--invalid')} src={photo} />
+                        <img className={'image ' + (isPhotoValid ? 'image--valid' : 'image--invalid')} src={photo} alt="picture taken" />
                         <div className={'feedback ' + (isPhotoValid ? 'feedback--valid' : 'feedback--invalid')}>
-                            <img src={isPhotoValid ? v : x} />
+                            <img src={isPhotoValid ? v : x} alt="icon"/>
                             <p>{isPhotoValid ? 'Accepted' : 'Rejected'}</p>
                         </div>
                     </>
                     : 
-                    <img className="image" src={Id} />    
+                    <img className="image" src={Id} alt="id card icon"/>    
                 }
                 {isPhotoValid ? '' :
                     <button className="button" onClick={changeCamera}>
-                        {hasPhoto ? 'Retake picture' : 'Take picture'}
+                        {photo !== '' ? 'Retake picture' : 'Take picture'}
                     </button>
                 }
-
             </div>
-
-
-
-        
         </div>
-
     )
-    
 }
-
 
 export default ScanPage;

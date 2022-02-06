@@ -1,17 +1,14 @@
 import React, {useRef, useState} from 'react';
 import './styles/App.scss';
-
 import ScanPage from './pages/ScanPage'
 import CapturePage from './pages/CapturePage'
-
 import checkPhoto from './services/checkPhoto'
 
 function App() {
-
+ 
   const [page, setPage] = useState('scan')
-  const [hasPhoto, setHasPhoto] = useState(false);
-  const [isPhotoValid, setIsPhotoValid] = useState(false);
   const [photo, setPhoto] = useState('');
+  const [isPhotoValid, setIsPhotoValid] = useState(false);
   const [apiResponse, setApiResponse] = useState(false);
 
   const videoRef = useRef(null);
@@ -19,7 +16,6 @@ function App() {
 
   const changeCamera = () => {
     setPage('camera')
-    setHasPhoto(false)
     setIsPhotoValid(false)
     setApiResponse(false)
     setPhoto('')
@@ -44,7 +40,6 @@ function App() {
       photo.height = height;
 
       let photoCtx = photo.getContext('2d');
-      
       photoCtx.drawImage(video, 0, 0, width, height);
 
       let photoData: string = photo.toDataURL('image/jpeg');
@@ -54,16 +49,10 @@ function App() {
         if(data.summary.outcome === "Approved"){
           setIsPhotoValid(true);
         }
-        
       })
-
-      setHasPhoto(true);
-      setPhoto(photoData)
-
-     
+      setPhoto(photoData) 
   }
 
-  console.log('isPhotoValid', isPhotoValid)
   const getVideo = () => {
       navigator.mediaDevices
           .getUserMedia({ 
@@ -83,15 +72,17 @@ function App() {
 
   return (
     <div className="wrapper">
-      
-      
       {page === 'scan' ?
-        <ScanPage hasPhoto= {hasPhoto} photo={photo} isPhotoValid={isPhotoValid} changeCamera={changeCamera}/>
+        <ScanPage photo={photo} 
+                  isPhotoValid={isPhotoValid} 
+                  changeCamera={changeCamera}/>
         :
-        <CapturePage hasPhoto= {hasPhoto} isPhotoValid={isPhotoValid} changeScan={changeScan} videoRef={videoRef} photoRef={photoRef} photo={photo} apiResponse={apiResponse}/>
-     
+        <CapturePage isPhotoValid={isPhotoValid} 
+                     changeScan={changeScan} 
+                     videoRef={videoRef} 
+                     photoRef={photoRef} 
+                     apiResponse={apiResponse}/>
       }
-    
     </div>
   );
 }

@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './CapturePage.scss';
-import x from '../../assets/images/x.svg'
-import v from '../../assets/images/v.svg'
 import bomb from '../../assets/images/bomb.svg'
 import vGreen from '../../assets/images/v-green.svg'
 
-const CapturePage: React.FC<{  hasPhoto: boolean, isPhotoValid: boolean, changeScan: any, videoRef: any, photoRef: any, photo: string, apiResponse: boolean}> = props => {
-    console.log('props', props)
-    
-    const { hasPhoto, changeScan, isPhotoValid, videoRef, photoRef, photo, apiResponse} = props;
+const CapturePage: React.FC<{ isPhotoValid: boolean, changeScan: any, videoRef: any, photoRef: any, apiResponse: boolean}> = props => {
+
+    const { changeScan, isPhotoValid, videoRef, photoRef, apiResponse} = props;
     
     const [isValidated, setIsValidated] = useState(apiResponse);
     console.log(isValidated, props);
@@ -33,7 +30,7 @@ const CapturePage: React.FC<{  hasPhoto: boolean, isPhotoValid: boolean, changeS
                     </canvas>
                 </div>
                 <div className="loading">
-                    <img src= {(isValidated ? '' : bomb)+(isPhotoValid ? vGreen : '')}  />
+                    <img src= {(isValidated ? '' : bomb)+(isPhotoValid ? vGreen : '')} alt="icon" />
                     <p className="text text--inverted">
                         {(isValidated ? '' : 'Room lighting is too low') + (isPhotoValid ? 'Picture taken' : '')}
                     </p>
@@ -41,13 +38,9 @@ const CapturePage: React.FC<{  hasPhoto: boolean, isPhotoValid: boolean, changeS
                 <button className="button-cancel" onClick={changeScan}>
                         Cancel
                 </button>
-            </div>
-               
+            </div>     
         </div>
-
     );
 }
-
-
 
 export default CapturePage;
