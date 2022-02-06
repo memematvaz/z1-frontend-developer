@@ -12,6 +12,7 @@ function App() {
   const [hasPhoto, setHasPhoto] = useState(false);
   const [isPhotoValid, setIsPhotoValid] = useState(false);
   const [photo, setPhoto] = useState('');
+  const [apiResponse, setApiResponse] = useState(false);
 
   const videoRef = useRef(null);
   const photoRef = useRef(null);
@@ -20,6 +21,7 @@ function App() {
     setPage('camera')
     setHasPhoto(false)
     setIsPhotoValid(false)
+    setApiResponse(false)
     setPhoto('')
     getVideo()
     setTimeout(() => {
@@ -46,15 +48,19 @@ function App() {
       photoCtx.drawImage(video, 0, 0, width, height);
 
       let photoData: string = photo.toDataURL('image/jpeg');
-    
-      setHasPhoto(true);
-      setPhoto(photoData)
-
+      
       checkPhoto(photoData).then((data) =>{
+        setApiResponse(true);
         if(data.summary.outcome === "Approved"){
           setIsPhotoValid(true);
         }
+        
       })
+
+      setHasPhoto(true);
+      setPhoto(photoData)
+
+     
   }
 
   console.log('isPhotoValid', isPhotoValid)
@@ -82,7 +88,7 @@ function App() {
       {page === 'scan' ?
         <ScanPage hasPhoto= {hasPhoto} photo={photo} isPhotoValid={isPhotoValid} changeCamera={changeCamera}/>
         :
-        <CapturePage hasPhoto= {hasPhoto} isPhotoValid={isPhotoValid} changeScan={changeScan} videoRef={videoRef} photoRef={photoRef}/>
+        <CapturePage hasPhoto= {hasPhoto} isPhotoValid={isPhotoValid} changeScan={changeScan} videoRef={videoRef} photoRef={photoRef} photo={photo} apiResponse={apiResponse}/>
      
       }
     
